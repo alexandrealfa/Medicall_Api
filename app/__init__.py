@@ -14,4 +14,5 @@ def create_app():
     database.init_app(app)
     migration.init_app(app)
     serializer.init_app(app)
+
     return app
