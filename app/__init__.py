@@ -4,6 +4,7 @@ from config import config_selector
 
 from app.configurations import database
 from app.configurations import serializer
+from app.configurations import migration
 
 
 def create_app():
@@ -11,5 +12,6 @@ def create_app():
     config_type = getenv("FLASK_ENV")
     app.config.from_object(config_selector[config_type])
     database.init_app(app)
+    migration.init_app(app)
     serializer.init_app(app)
     return app
