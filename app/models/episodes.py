@@ -7,5 +7,10 @@ class EpisodesModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String, nullable=False)
-    category = db.Column(db.Integer, nullable=False)
-    created_at = db.Column(db.Date, default=datetime.datetime.utcnow)
+    urgency = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+
+
+# 1- Baixa
+# 2- Média
+# 3- Alta
