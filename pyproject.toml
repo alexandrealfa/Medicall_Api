@@ -17,6 +17,7 @@ marshmallow = "^3.11.1"
 flask-marshmallow = "^0.14.0"
 marshmallow-sqlalchemy = "^0.24.2"
 Faker = "^8.0.0"
+ipdb = "^0.13.7"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

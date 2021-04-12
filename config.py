@@ -1,4 +1,7 @@
-from os import getenv
+from environs import Env
+
+env = Env()
+env.read_env()
 
 
 class Config:
@@ -6,11 +9,11 @@ class Config:
 
 
 class DevelopmentConfig(Config):
-    SQLALCHEMY_DATABASE_URI = getenv("DB_URI_DEV")
+    SQLALCHEMY_DATABASE_URI = env("DB_URI_DEV")
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = getenv("DB_URI_PROD")
+    ...
 
 
 class TestConfig(Config):
