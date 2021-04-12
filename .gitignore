@@ -1,0 +1,23 @@
+### Instance ###
+instance/
+!instance/.gitignore
+__pycache__/
+
+### env and environs ###
+.venv/
+.env/
+ENV/
+.env
+env.bak/
+venv.bak/
+pythonenv/
+
+### VsCode ###
+!.vscode/settings.json
+!.vscode/extensions.json
+
+
+### PyCharm ###
+.idea/
+
+
