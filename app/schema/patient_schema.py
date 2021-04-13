@@ -9,9 +9,9 @@ class PatientSchema(ma.Schema):
     id = ma.Integer()
     firstname = ma.String()
     lastname = ma.String()
-    phone = ma.Column()
+    phone = ma.String()
     email = ma.String()
-    created_at = ma.Datetime()
+    created_at = ma.String()
 
 
 patient_schema = PatientSchema()

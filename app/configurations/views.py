@@ -14,5 +14,5 @@ def init_app(app: Flask):
     api.add_resource(Doctor, "/api/doctors", endpoint="/api/doctor/<int:doctor_id>", methods=["GET", "PATCH", "DELETE"])
 
     api.add_resource(AllPatients, "/api/patients", endpoint="/api/patients", methods=["GET"])
-    api.add_resource(Patients, "/api/patients", endpoint="/api/patient/", methods=["POST"])
-    api.add_resource(Patients, "/api/patients", endpoint="api/patient/<int:patient_id>", methods=["GET", "PATCH", "DELETE"])
+    api.add_resource(Patients, "/api/patient", endpoint="/api/patient/", methods=["POST"])
+    api.add_resource(Patients, "/api/patient/<int:patient_id>", endpoint="/api/patient/<int:patient_id>", methods=["GET", "PATCH", "DELETE"])
