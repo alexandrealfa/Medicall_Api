@@ -1,5 +1,5 @@
-from . import patient_schema, patients_schema, PatientModel
-from flask_restful import Resource, reqparse, current_app
+from . import patient_schema, patients_schema, PatientModel, db_manager
+from flask_restful import Resource, reqparse
 from http import HTTPStatus
 
 
@@ -15,16 +15,6 @@ class AllPatients(Resource):
 
 
 class Patients(Resource):
-
-    @staticmethod
-    def save_db(available_patient: object, deleted: bool = False):
-        session = current_app.db.session
-        if deleted:
-            session.delete(available_patient)
-            session.commit()
-        else:
-            session.add(available_patient)
-            session.commit()
 
     def get(self, patient_id):
         current_patient = PatientModel.query.get_or_404(patient_id)
@@ -45,7 +35,7 @@ class Patients(Resource):
         kwargs = parse.parse_args()
 
         new_patient = PatientModel(**kwargs)
-        Patients.save_db(new_patient)
+        db_manager(new_patient)
         serializer = patient_schema.dump(new_patient)
 
         return {
@@ -68,7 +58,7 @@ class Patients(Resource):
         if kwargs.password:
             setattr(current_patient, "password", kwargs.password)
 
-        Patients.save_db(current_patient)
+        db_manager(current_patient)
         serializer = patient_schema.dump(current_patient)
 
         return {
@@ -78,7 +68,7 @@ class Patients(Resource):
 
     def delete(self, patient_id):
         current_patient = PatientModel.query.get_or_404(patient_id)
-        Patients.save_db(current_patient, True)
+        db_manager(current_patient)
 
         return {
                    "msg": f"Patient {patient_id} has been deleted"

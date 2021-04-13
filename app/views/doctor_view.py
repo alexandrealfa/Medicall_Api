@@ -1,9 +1,7 @@
 from flask.globals import session
-from flask_restful import Resource, reqparse, current_app
+from flask_restful import Resource, reqparse
 from http import HTTPStatus
-
-from app.models.doctor_model import DoctorModel
-from app.schema.doctor_schema import doctor_schema, doctors_schema
+from . import DoctorModel, doctor_schema, doctors_schema, db_manager
 
 
 class AllDoctors(Resource):
@@ -45,9 +43,7 @@ class Doctor(Resource):
 
         new_doctor.password = kwargs.password
 
-        session = current_app.db.session
-        session.add(new_doctor)
-        session.commit()
+        db_manager(new_doctor)
 
         serializer = doctor_schema.dump(new_doctor)
 
@@ -76,17 +72,13 @@ class Doctor(Resource):
         if kwargs.password:
             setattr(doctor, "password", kwargs.password)
 
-        session = current_app.db.session
-        session.add(doctor)
-        session.commit()
+        db_manager(doctor)
         serializer = doctor_schema.dump(doctor)
 
         return {"data": serializer}, HTTPStatus.OK
 
     def delete(self, doctor_id):
         doctor = DoctorModel.query.get_or_404(doctor_id)
-        session = current_app.db.session
-        session.delete(doctor)
-        session.commit()
+        db_manager(doctor)
 
         return {"data": f"Doctor {doctor_id} has successfully been deleted"}, HTTPStatus.OK
