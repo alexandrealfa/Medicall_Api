@@ -1,12 +1,12 @@
 from . import db
 import datetime
-import enum
 
 
-class UrgencyEnum(enum.Enum):
-    low = 1
-    medium = 2
-    high = 3
+# VERMLHO = EMERGENCIA
+# LARANJA = MUITO URGENTE
+# AMARELO = URGENTE
+# VERDE = POUCO URGENTE
+# AZUL = NAO URGENTE
 
 
 class EpisodeModel(db.Model):
