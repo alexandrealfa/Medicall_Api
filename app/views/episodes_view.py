@@ -1,8 +1,17 @@
 from flask_restful import Resource, reqparse
 from http import HTTPStatus
-from flask import current_app, request
+from flask import request
+from sqlalchemy.exc import IntegrityError
 
-from . import EpisodeModel, episode_schema, episodes_schema, db_manager, is_bad_request
+from . import (
+    EpisodeModel,
+    PatientModel,
+    DoctorModel,
+    episode_schema,
+    episodes_schema,
+    db_manager,
+    is_bad_request,
+)
 
 
 class AllEpisodes(Resource):
@@ -15,13 +24,11 @@ class AllEpisodes(Resource):
 
 class DoctorEpisodes(Resource):
     def get(self, doctor_id):
-        session = current_app.db.session
 
-        all_episodes: EpisodeModel = (
-            session.query(EpisodeModel)
-            .filter(EpisodeModel.doctor_id == doctor_id)
-            .all()
-        )
+        DoctorModel.query.get_or_404(doctor_id)
+        all_episodes: EpisodeModel = EpisodeModel.query.filter(
+            EpisodeModel.doctor_id == doctor_id
+        ).all()
 
         serializer = episodes_schema.dump(all_episodes)
 
@@ -30,13 +37,11 @@ class DoctorEpisodes(Resource):
 
 class PatientEpisodes(Resource):
     def get(self, patient_id):
-        session = current_app.db.session
 
-        all_episodes: EpisodeModel = (
-            session.query(EpisodeModel)
-            .filter(EpisodeModel.patient_id == patient_id)
-            .all()
-        )
+        PatientModel.query.get_or_404(patient_id)
+        all_episodes: EpisodeModel = EpisodeModel.query.filter(
+            EpisodeModel.patient_id == patient_id
+        ).all()
 
         serializer = episodes_schema.dump(all_episodes)
 
@@ -46,7 +51,7 @@ class PatientEpisodes(Resource):
 class Episode(Resource):
     def get(self, episode_id):
 
-        episode: EpisodeModel = EpisodeModel.query.get(episode_id)
+        episode: EpisodeModel = EpisodeModel.query.get_or_404(episode_id)
 
         serializer = episode_schema.dump(episode)
         return {"message": "success", "data": serializer}, HTTPStatus.OK
@@ -63,7 +68,10 @@ class Episode(Resource):
 
         new_episode = EpisodeModel(**kwargs)
 
-        db_manager(new_episode)
+        try:
+            db_manager(new_episode)
+        except IntegrityError:
+            return {"message": "doctor or patient not found"}, HTTPStatus.NOT_FOUND
 
         serializer = episode_schema.dump(new_episode)
 
