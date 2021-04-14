@@ -4,7 +4,7 @@ import datetime
 
 
 class PatientModel(db.Model):
-    __tablename__ = 'patients'
+    __tablename__ = "patients"
 
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String, nullable=False)
@@ -13,6 +13,8 @@ class PatientModel(db.Model):
     email = db.Column(db.String, nullable=False)
     password_hash = db.Column(db.String, nullable=False)
     create_at = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+
+    episodes_list = db.relationship("EpisodeModel", backref=db.backref("episodes_list", lazy="joined"), lazy="joined")
 
     @property
     def password(self):

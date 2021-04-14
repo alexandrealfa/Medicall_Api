@@ -1,4 +1,6 @@
 import datetime
+
+from sqlalchemy.orm import backref
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -15,6 +17,8 @@ class DoctorModel(db.Model):
     email = db.Column(db.String, nullable=False, unique=True)
     password_hash = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+
+    episodes_list = db.relationship("EpisodeModel", backref=db.backref("episodes_list", lazy="joined"), lazy="joined")
 
     @property
     def password(self):
