@@ -8,7 +8,7 @@ class EpisodeSchema(ma.Schema):
 
     id = ma.Integer()
     description = ma.String()
-    urgency = ma.Integer()
+    emergency_status = ma.String()
     doctor_id = ma.Integer()
     patient_id = ma.Integer()
     created_at = ma.String()

@@ -16,9 +16,13 @@ class AllEpisodes(Resource):
 class DoctorEpisodes(Resource):
     def get(self, doctor_id):
         session = current_app.db.session
-        
-        all_episodes: EpisodeModel = session.query(EpisodeModel).filter(EpisodeModel.doctor_id == doctor_id).all()
-        
+
+        all_episodes: EpisodeModel = (
+            session.query(EpisodeModel)
+            .filter(EpisodeModel.doctor_id == doctor_id)
+            .all()
+        )
+
         serializer = episodes_schema.dump(all_episodes)
 
         return {"data": serializer}, HTTPStatus.OK
@@ -27,9 +31,13 @@ class DoctorEpisodes(Resource):
 class PatientEpisodes(Resource):
     def get(self, patient_id):
         session = current_app.db.session
-        
-        all_episodes: EpisodeModel = session.query(EpisodeModel).filter(EpisodeModel.patient_id == patient_id).all()
-        
+
+        all_episodes: EpisodeModel = (
+            session.query(EpisodeModel)
+            .filter(EpisodeModel.patient_id == patient_id)
+            .all()
+        )
+
         serializer = episodes_schema.dump(all_episodes)
 
         return {"data": serializer}, HTTPStatus.OK
@@ -37,9 +45,9 @@ class PatientEpisodes(Resource):
 
 class Episode(Resource):
     def get(self, episode_id):
-        
+
         episode: EpisodeModel = EpisodeModel.query.get_or_404(episode_id)
-        
+
         serializer = episode_schema.dump(episode)
         return {"data": serializer}, HTTPStatus.OK
 
@@ -47,7 +55,7 @@ class Episode(Resource):
         parse = reqparse.RequestParser()
 
         parse.add_argument("description", type=str, required=True)
-        parse.add_argument("emergency_status", type=int, required=True)
+        parse.add_argument("emergency_status", type=str, required=True)
         parse.add_argument("doctor_id", type=int, required=True)
         parse.add_argument("patient_id", type=int, required=True)
 
@@ -61,14 +69,12 @@ class Episode(Resource):
 
         return {"data": serializer}, HTTPStatus.OK
 
-
-
     def patch(self, episode_id):
         body = request.get_json()
 
         parse = reqparse.RequestParser()
         parse.add_argument("description", type=str)
-        parse.add_argument("urgency", type=int)
+        parse.add_argument("emergency_status", type=str)
         parse.add_argument("doctor_id", type=int)
         parse.add_argument("patient_id", type=int)
         parse.add_argument("created_at", type=str)
@@ -78,15 +84,18 @@ class Episode(Resource):
         current_episode = EpisodeModel.query.get_or_404(episode_id)
 
         if is_bad_request(body):
-                return {"msg": "bad request"}, HTTPStatus.BAD_REQUEST
-       
-        [setattr(current_episode, key, value) for key, value in kwargs.items() if value is not None]
+            return {"msg": "bad request"}, HTTPStatus.BAD_REQUEST
+
+        [
+            setattr(current_episode, key, value)
+            for key, value in kwargs.items()
+            if value is not None
+        ]
 
         db_manager(current_episode)
         serializer = episode_schema.dump(current_episode)
 
-        return {"msg": "success updated","data": serializer}, HTTPStatus.OK
-
+        return {"msg": "success updated", "data": serializer}, HTTPStatus.OK
 
     def delete(self, episode_id):
         current_episode = EpisodeModel.query.get_or_404(episode_id)
