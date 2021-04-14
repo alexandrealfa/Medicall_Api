@@ -14,7 +14,7 @@ class PatientModel(db.Model):
     password_hash = db.Column(db.String, nullable=False)
     create_at = db.Column(db.DateTime, default=datetime.datetime.utcnow())
 
-    episodes_list = db.relationship("EpisodeModel", backref=db.backref("episodes_list", lazy="joined"), lazy="joined")
+    episodes_list = db.relationship("EpisodeModel", backref=db.backref("patient_list", lazy="joined"), lazy="joined")
 
     @property
     def password(self):

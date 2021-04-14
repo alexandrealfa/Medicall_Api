@@ -2,9 +2,11 @@ from flask.globals import session
 from flask_restful import Resource, reqparse
 from http import HTTPStatus
 from . import DoctorModel, doctor_schema, doctors_schema, db_manager
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 class AllDoctors(Resource):
+    @jwt_required()
     def get(self):
         all_doctors: DoctorModel = DoctorModel.query.order_by(DoctorModel.id).all()
         serializer = doctors_schema.dump(all_doctors)
@@ -13,7 +15,9 @@ class AllDoctors(Resource):
 
 
 class Doctor(Resource):
-    def get(self, doctor_id):
+    @jwt_required()
+    def get(self):
+        doctor_id = get_jwt_identity()
         doctor = DoctorModel.query.get(doctor_id)
         serializer = doctor_schema.dump(doctor)
 
@@ -49,7 +53,8 @@ class Doctor(Resource):
 
         return {"data": serializer}, HTTPStatus.OK
 
-    def patch(self, doctor_id):
+    @jwt_required()
+    def patch(self):
         parse = reqparse.RequestParser()
 
         parse.add_argument("specialty", type=str)
@@ -62,12 +67,11 @@ class Doctor(Resource):
 
         kwargs = parse.parse_args()
 
+        doctor_id = get_jwt_identity()
         doctor = DoctorModel.query.get_or_404(doctor_id)
-
         for key, value in kwargs.items():
-            if value:
-                if key != "password":
-                    setattr(doctor, key, value)
+            if key != "password" and value is not None:
+                setattr(doctor, key, value)
 
         if kwargs.password:
             setattr(doctor, "password", kwargs.password)
@@ -77,7 +81,9 @@ class Doctor(Resource):
 
         return {"data": serializer}, HTTPStatus.OK
 
-    def delete(self, doctor_id):
+    @jwt_required()
+    def delete(self):
+        doctor_id = get_jwt_identity()
         doctor = DoctorModel.query.get_or_404(doctor_id)
         db_manager(doctor)
 
