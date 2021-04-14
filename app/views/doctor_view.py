@@ -85,6 +85,6 @@ class Doctor(Resource):
     def delete(self):
         doctor_id = get_jwt_identity()
         doctor = DoctorModel.query.get_or_404(doctor_id)
-        db_manager(doctor)
+        db_manager(doctor, True)
 
         return {"data": f"Doctor {doctor_id} has successfully been deleted"}, HTTPStatus.OK
