@@ -68,7 +68,7 @@ class Patients(Resource):
 
     def delete(self, patient_id):
         current_patient = PatientModel.query.get_or_404(patient_id)
-        db_manager(current_patient)
+        db_manager(current_patient, True)
 
         return {
                    "msg": f"Patient {patient_id} has been deleted"
