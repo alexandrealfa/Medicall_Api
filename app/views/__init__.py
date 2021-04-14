@@ -16,6 +16,7 @@ def db_manager(available_patient: object, deleted: bool = False):
         session.add(available_patient)
         session.commit()
 
+
 def is_bad_request(request):
     is_bad = False
 

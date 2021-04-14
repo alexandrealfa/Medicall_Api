@@ -10,3 +10,4 @@ def init_app(app: Flask):
 
     from app.models.doctor_model import DoctorModel
     from app.models.patient_model import PatientModel
+    from app.models.episode_model import EpisodeModel

@@ -6,6 +6,7 @@ from app.configurations import database
 from app.configurations import serializer
 from app.configurations import migration
 from app.configurations import views
+from app.configurations import authentication
 
 env = Env()
 env.read_env()
@@ -17,6 +18,7 @@ def create_app():
     app.config.from_object(config_selector[config_type])
 
     database.init_app(app)
+    authentication.init_app(app)
     migration.init_app(app)
     serializer.init_app(app)
     views.init_app(app)

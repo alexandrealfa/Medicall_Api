@@ -12,6 +12,7 @@ class AllEpisodes(Resource):
 
         return {"data": serializer}, HTTPStatus.OK
 
+
 class DoctorEpisodes(Resource):
     def get(self, doctor_id):
         session = current_app.db.session
@@ -21,6 +22,7 @@ class DoctorEpisodes(Resource):
         serializer = episodes_schema.dump(all_episodes)
 
         return {"data": serializer}, HTTPStatus.OK
+
 
 class PatientEpisodes(Resource):
     def get(self, patient_id):
@@ -45,7 +47,7 @@ class Episode(Resource):
         parse = reqparse.RequestParser()
 
         parse.add_argument("description", type=str, required=True)
-        parse.add_argument("urgency", type=int, required=True)
+        parse.add_argument("emergency_status", type=int, required=True)
         parse.add_argument("doctor_id", type=int, required=True)
         parse.add_argument("patient_id", type=int, required=True)
 

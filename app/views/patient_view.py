@@ -1,6 +1,7 @@
 from . import patient_schema, patients_schema, PatientModel, db_manager
 from flask_restful import Resource, reqparse
 from http import HTTPStatus
+from flask_jwt_extended import get_jwt_identity, jwt_required
 
 
 class AllPatients(Resource):
@@ -15,8 +16,9 @@ class AllPatients(Resource):
 
 
 class Patients(Resource):
-
-    def get(self, patient_id):
+    @jwt_required()
+    def get(self):
+        patient_id = get_jwt_identity()
         current_patient = PatientModel.query.get_or_404(patient_id)
         serializer = patient_schema.dump(current_patient)
 
@@ -43,7 +45,8 @@ class Patients(Resource):
                    "data": serializer
                }, HTTPStatus.OK
 
-    def patch(self, patient_id):
+    @jwt_required()
+    def patch(self):
         parse = reqparse.RequestParser()
         parse.add_argument("firstname", type=str)
         parse.add_argument("lastname", type=str)
@@ -51,6 +54,8 @@ class Patients(Resource):
         parse.add_argument("email", type=str)
         parse.add_argument("password", type=str)
 
+        patient_id = get_jwt_identity()
+        print(patient_id)
         current_patient = PatientModel.query.get_or_404(patient_id)
         kwargs = parse.parse_args()
 
@@ -66,7 +71,9 @@ class Patients(Resource):
                    "data": serializer
                }, HTTPStatus.OK
 
-    def delete(self, patient_id):
+    @jwt_required()
+    def delete(self):
+        patient_id = get_jwt_identity()
         current_patient = PatientModel.query.get_or_404(patient_id)
         db_manager(current_patient, True)
 
