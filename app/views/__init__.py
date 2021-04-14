@@ -17,11 +17,11 @@ def db_manager(available_patient: object, deleted: bool = False):
         session.commit()
 
 
-def is_bad_request(request):
+def is_bad_request(body, valid_keys):
     is_bad = False
 
-    body_keys = [k for k in request.keys()]
-    reference = ['description', 'urgency', 'doctor_id', 'patient_id', 'created_at']
+    body_keys = [k for k in body.keys()]
+    reference = [k for k in valid_keys]
 
     for k in body_keys:
         if k not in reference:

@@ -10,7 +10,7 @@ class AllEpisodes(Resource):
         all_episodes: EpisodeModel = EpisodeModel.query.order_by(EpisodeModel.id).all()
         serializer = episodes_schema.dump(all_episodes)
 
-        return {"data": serializer}, HTTPStatus.OK
+        return {"message": "success", "data": serializer}, HTTPStatus.OK
 
 
 class DoctorEpisodes(Resource):
@@ -25,7 +25,7 @@ class DoctorEpisodes(Resource):
 
         serializer = episodes_schema.dump(all_episodes)
 
-        return {"data": serializer}, HTTPStatus.OK
+        return {"message": "success", "data": serializer}, HTTPStatus.OK
 
 
 class PatientEpisodes(Resource):
@@ -40,16 +40,16 @@ class PatientEpisodes(Resource):
 
         serializer = episodes_schema.dump(all_episodes)
 
-        return {"data": serializer}, HTTPStatus.OK
+        return {"message": "success", "data": serializer}, HTTPStatus.OK
 
 
 class Episode(Resource):
     def get(self, episode_id):
 
-        episode: EpisodeModel = EpisodeModel.query.get_or_404(episode_id)
+        episode: EpisodeModel = EpisodeModel.query.get(episode_id)
 
         serializer = episode_schema.dump(episode)
-        return {"data": serializer}, HTTPStatus.OK
+        return {"message": "success", "data": serializer}, HTTPStatus.OK
 
     def post(self):
         parse = reqparse.RequestParser()
@@ -67,7 +67,7 @@ class Episode(Resource):
 
         serializer = episode_schema.dump(new_episode)
 
-        return {"data": serializer}, HTTPStatus.OK
+        return {"message": "success created", "data": serializer}, HTTPStatus.OK
 
     def patch(self, episode_id):
         body = request.get_json()
@@ -83,8 +83,8 @@ class Episode(Resource):
 
         current_episode = EpisodeModel.query.get_or_404(episode_id)
 
-        if is_bad_request(body):
-            return {"msg": "bad request"}, HTTPStatus.BAD_REQUEST
+        if is_bad_request(body, kwargs.keys()):
+            return {"message": "invalid values"}, HTTPStatus.BAD_REQUEST
 
         [
             setattr(current_episode, key, value)
@@ -95,10 +95,10 @@ class Episode(Resource):
         db_manager(current_episode)
         serializer = episode_schema.dump(current_episode)
 
-        return {"msg": "success updated", "data": serializer}, HTTPStatus.OK
+        return {"message": "success updated", "data": serializer}, HTTPStatus.OK
 
     def delete(self, episode_id):
         current_episode = EpisodeModel.query.get_or_404(episode_id)
         db_manager(current_episode, True)
 
-        return {"msg": f"Patient {episode_id} has been deleted"}, HTTPStatus.OK
+        return {"message": f"patient {episode_id} has been deleted"}, HTTPStatus.OK
