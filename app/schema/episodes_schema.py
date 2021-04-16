@@ -1,5 +1,6 @@
-from . import ma
+from . import ma, EnumEmergency
 from app.models.episode_model import EpisodeModel
+from marshmallow_enum import EnumField
 
 
 class EpisodeSchema(ma.Schema):
@@ -8,7 +9,7 @@ class EpisodeSchema(ma.Schema):
 
     id = ma.Integer()
     description = ma.String()
-    urgency = ma.Integer()
+    emergency_status = EnumField(EnumEmergency, by_value=True)
     doctor_id = ma.Integer()
     patient_id = ma.Integer()
     created_at = ma.String()

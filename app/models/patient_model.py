@@ -7,7 +7,7 @@ class PatientModel(BaseModel):
     firstname = db.Column(db.String, nullable=False)
     lastname = db.Column(db.String, nullable=False)
     phone = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False, unique=True)
     password_hash = db.Column(db.String, nullable=False)
     create_at = db.Column(db.DateTime, default=datetime.datetime.utcnow())
 

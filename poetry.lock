@@ -391,6 +391,17 @@ lint = ["mypy (==0.812)", "flake8 (==3.9.0)", "flake8-bugbear (==21.3.2)", "pre-
 tests = ["pytest", "pytz", "simplejson"]
 
 [[package]]
+name = "marshmallow-enum"
+version = "1.5.1"
+description = "Enum field for Marshmallow"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+marshmallow = ">=2.0.0"
+
+[[package]]
 name = "marshmallow-sqlalchemy"
 version = "0.24.2"
 description = "SQLAlchemy integration with the marshmallow (de)serialization library"
@@ -739,7 +750,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "d591a8bb1cccb7fbc22c9420eee51e2b2bca57d00262351e8cbcc7ea1e443f61"
+content-hash = "e072ca3bf968d9ed5445c5445b84e1448cb24fce435f8a5d263dd48ad6fd784e"
 
 [metadata.files]
 alembic = [
@@ -950,6 +961,10 @@ markupsafe = [
 marshmallow = [
     {file = "marshmallow-3.11.1-py2.py3-none-any.whl", hash = "sha256:0dd42891a5ef288217ed6410917f3c6048f585f8692075a0052c24f9bfff9dfd"},
     {file = "marshmallow-3.11.1.tar.gz", hash = "sha256:16e99cb7f630c0ef4d7d364ed0109ac194268dde123966076ab3dafb9ae3906b"},
+]
+marshmallow-enum = [
+    {file = "marshmallow-enum-1.5.1.tar.gz", hash = "sha256:38e697e11f45a8e64b4a1e664000897c659b60aa57bfa18d44e226a9920b6e58"},
+    {file = "marshmallow_enum-1.5.1-py2.py3-none-any.whl", hash = "sha256:57161ab3dbfde4f57adeb12090f39592e992b9c86d206d02f6bd03ebec60f072"},
 ]
 marshmallow-sqlalchemy = [
     {file = "marshmallow-sqlalchemy-0.24.2.tar.gz", hash = "sha256:ee3ead3b83de6608c6850ff60515691b0dc556ca226680f8a82b9f785cdb71b1"},
