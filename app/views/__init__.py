@@ -4,6 +4,7 @@ from app.models.doctor_model import DoctorModel
 from app.schema.doctor_schema import doctor_schema, doctors_schema
 from app.models.episode_model import EpisodeModel
 from app.schema.episodes_schema import episode_schema, episodes_schema
+
 from flask import current_app
 
 
