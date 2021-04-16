@@ -13,15 +13,6 @@ from . import (
     is_bad_request,
 )
 
-
-class AllEpisodes(Resource):
-    def get(self):
-        all_episodes: EpisodeModel = EpisodeModel.query.order_by(EpisodeModel.id).all()
-        serializer = episodes_schema.dump(all_episodes)
-
-        return {"message": "success", "data": serializer}, HTTPStatus.OK
-
-
 class DoctorEpisodes(Resource):
     def get(self, doctor_id):
 
