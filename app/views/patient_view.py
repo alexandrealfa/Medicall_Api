@@ -6,14 +6,6 @@ from flask import request
 from sqlalchemy.exc import IntegrityError
 
 
-class AllPatients(Resource):
-    def get(self):
-        all_patients = PatientModel.query.all()
-        serializer = patients_schema.dump(all_patients)
-
-        return {"message": "success", "data": serializer}, HTTPStatus.OK
-
-
 class Patients(Resource):
     @jwt_required()
     def get(self):

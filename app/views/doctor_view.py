@@ -5,14 +5,6 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request
 from sqlalchemy.exc import IntegrityError
 
-class AllDoctors(Resource):
-    @jwt_required()
-    def get(self):
-        all_doctors: DoctorModel = DoctorModel.query.order_by(DoctorModel.id).all()
-        serializer = doctors_schema.dump(all_doctors)
-
-        return {"message": "success", "data": serializer}, HTTPStatus.OK
-
 
 class Doctor(Resource):
     @jwt_required()
