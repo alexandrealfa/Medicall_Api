@@ -1,12 +1,9 @@
-from . import db
+from .base_model import db, BaseModel
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 
 
-class PatientModel(db.Model):
-    __tablename__ = "patients"
-
-    id = db.Column(db.Integer, primary_key=True)
+class PatientModel(BaseModel):
     firstname = db.Column(db.String, nullable=False)
     lastname = db.Column(db.String, nullable=False)
     phone = db.Column(db.String, nullable=False)
