@@ -1,10 +1,9 @@
-from flask.globals import session
 from flask_restful import Resource, reqparse
 from http import HTTPStatus
 from . import DoctorModel, doctor_schema, doctors_schema, db_manager, is_bad_request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request
-
+from sqlalchemy.exc import IntegrityError
 
 class AllDoctors(Resource):
     @jwt_required()
@@ -48,7 +47,10 @@ class Doctor(Resource):
 
         new_doctor.password = kwargs.password
 
-        db_manager(new_doctor)
+        try:
+            db_manager(new_doctor)
+        except IntegrityError:
+            return {"message": "email already in use"}, HTTPStatus.NOT_ACCEPTABLE
 
         serializer = doctor_schema.dump(new_doctor)
 

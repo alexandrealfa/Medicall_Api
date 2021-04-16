@@ -3,6 +3,7 @@ from flask_restful import Resource, reqparse
 from http import HTTPStatus
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask import request
+from sqlalchemy.exc import IntegrityError
 
 
 class AllPatients(Resource):
@@ -32,7 +33,12 @@ class Patients(Resource):
         kwargs = parse.parse_args()
 
         new_patient = PatientModel(**kwargs)
-        db_manager(new_patient)
+
+        try:
+            db_manager(new_patient)
+        except IntegrityError:
+            return {"message": "email already in use"}, HTTPStatus.NOT_ACCEPTABLE
+
         serializer = patient_schema.dump(new_patient)
 
         return {"message": "success created", "data": serializer}, HTTPStatus.OK
