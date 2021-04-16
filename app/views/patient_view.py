@@ -24,6 +24,8 @@ class Patients(Resource):
         return {"message": "success", "data": serializer}, HTTPStatus.OK
 
     def post(self):
+        body = request.get_json()
+
         parse = reqparse.RequestParser()
         parse.add_argument("firstname", type=str, required=True)
         parse.add_argument("lastname", type=str, required=True)
@@ -31,6 +33,9 @@ class Patients(Resource):
         parse.add_argument("email", type=str, required=True)
         parse.add_argument("password", type=str, required=True)
         kwargs = parse.parse_args()
+
+        if is_bad_request(body, kwargs.keys()):
+                    return {"message": "invalid values"}, HTTPStatus.BAD_REQUEST
 
         new_patient = PatientModel(**kwargs)
 
