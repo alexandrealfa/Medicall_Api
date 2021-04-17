@@ -1,5 +1,6 @@
 from . import ma
 from app.models.patient_model import PatientModel
+from app.schema.episodes_schema import episodes_schema
 
 
 class PatientSchema(ma.Schema):
@@ -12,6 +13,7 @@ class PatientSchema(ma.Schema):
     phone = ma.String()
     email = ma.String()
     created_at = ma.String()
+    episodes_list = ma.Nested(episodes_schema)
 
 
 patient_schema = PatientSchema()
