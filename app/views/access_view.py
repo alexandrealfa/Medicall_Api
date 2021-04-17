@@ -27,11 +27,14 @@ class SignIn(Resource):
         if not found_user:
             found_user: PatientModel = PatientModel.query.filter_by(email=email).first()
 
-
         if not found_user.check_password(password):
             return {"message": "unauthorized"}, HTTPStatus.UNAUTHORIZED    
 
         access_token = create_access_token(identity=found_user.id, expires_delta=timedelta(days=7))
+
         serializer = doctor_schema.dump(found_user)
-        
-        return {"message": "sucess", "data": serializer, "access_token": access_token}, HTTPStatus.OK
+        return {
+                   "message": "success",
+                   "data": serializer,
+                   "access_token": access_token
+               }, HTTPStatus.OK
