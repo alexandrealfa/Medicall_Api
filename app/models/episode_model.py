@@ -14,7 +14,4 @@ class EpisodeModel(BaseModel):
     )
     doctor_id = db.Column(db.Integer, db.ForeignKey("doctors.id"), nullable=False)
     patient_id = db.Column(db.Integer, db.ForeignKey("patients.id"), nullable=False)
-    address = db.relationship(
-        "AddressModel", uselist=False, lazy="joined", backref=db.backref("address", lazy="joined")
-    )
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow())
