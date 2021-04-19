@@ -4,9 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app.models.enum_model import EnumType
 
 
-class DoctorModel(BaseModel):
-    specialty = db.Column(db.String, nullable=False)
-    crm = db.Column(db.String, nullable=False)
+class SuperuserModel(BaseModel):
     firstname = db.Column(db.String, nullable=False)
     lastname = db.Column(db.String, nullable=False)
     phone = db.Column(db.String, nullable=False)
@@ -16,10 +14,9 @@ class DoctorModel(BaseModel):
     user_type = db.Column(
         db.Enum(EnumType, values_callable=lambda obj: [enum.value for enum in obj]),
         nullable=False,
-        default=EnumType.DOCTOR.value,
-        server_default=EnumType.DOCTOR.value,
+        default=EnumType.SUPER_USER.value,
+        server_default=EnumType.SUPER_USER.value,
     )
-    episodes_list = db.relationship("EpisodeModel", backref=db.backref("episodes_list", lazy="joined"), lazy="joined")
 
     @property
     def password(self):
