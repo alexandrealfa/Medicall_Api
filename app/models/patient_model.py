@@ -1,6 +1,7 @@
 from .base_model import db, BaseModel
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+from app.models.enum_model import EnumType
 
 
 class PatientModel(BaseModel):
@@ -10,7 +11,12 @@ class PatientModel(BaseModel):
     email = db.Column(db.String, nullable=False, unique=True)
     password_hash = db.Column(db.String, nullable=False)
     create_at = db.Column(db.DateTime, default=datetime.datetime.utcnow())
-
+    user_type = db.Column(
+        db.Enum(EnumType, values_callable=lambda obj: [enum.value for enum in obj]),
+        nullable=False,
+        default=EnumType.PATIENT.value,
+        server_default=EnumType.PATIENT.value,
+    )
     episodes_list = db.relationship("EpisodeModel", backref=db.backref("patient_list", lazy="joined"), lazy="joined")
 
     @property

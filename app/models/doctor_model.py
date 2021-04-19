@@ -1,14 +1,10 @@
 import datetime
-
-from sqlalchemy.orm import backref
-from . import db
+from .base_model import db, BaseModel
 from werkzeug.security import generate_password_hash, check_password_hash
+from app.models.enum_model import EnumType
 
 
-class DoctorModel(db.Model):
-    __tablename__ = "doctors"
-
-    id = db.Column(db.Integer, primary_key=True)
+class DoctorModel(BaseModel):
     specialty = db.Column(db.String, nullable=False)
     crm = db.Column(db.String, nullable=False)
     firstname = db.Column(db.String, nullable=False)
@@ -17,7 +13,12 @@ class DoctorModel(db.Model):
     email = db.Column(db.String, nullable=False, unique=True)
     password_hash = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow())
-
+    user_type = db.Column(
+        db.Enum(EnumType, values_callable=lambda obj: [enum.value for enum in obj]),
+        nullable=False,
+        default=EnumType.DOCTOR.value,
+        server_default=EnumType.DOCTOR.value,
+    )
     episodes_list = db.relationship("EpisodeModel", backref=db.backref("episodes_list", lazy="joined"), lazy="joined")
 
     @property
