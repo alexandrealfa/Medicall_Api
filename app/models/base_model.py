@@ -10,9 +10,10 @@ class BaseModel(db.Model):
 
     @declared_attr
     def __tablename__(cls):
-        model_name = cls.__name__.replace("Model", "")
-        plural_table_name = f"{model_name.lower()}s"
-        return plural_table_name
+        model_name = cls.__name__.replace("Model", "").lower()
+        if not model_name.endswith("s"):
+            return f"{model_name}s"
+        return model_name
 
     def save(self, deleted=False, auto_commit=True):
 

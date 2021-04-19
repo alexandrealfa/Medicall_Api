@@ -48,14 +48,18 @@ class Episode(Resource):
         return {"message": "success", "data": serializer}, HTTPStatus.OK
 
     def post(self):
-        parse = reqparse.RequestParser()
+        body = request.get_json()
 
+        parse = reqparse.RequestParser()
         parse.add_argument("description", type=str, required=True)
         parse.add_argument("emergency_status", type=str, required=True)
         parse.add_argument("doctor_id", type=int, required=True)
         parse.add_argument("patient_id", type=int, required=True)
 
         kwargs = parse.parse_args()
+
+        if is_bad_request(body, kwargs.keys()):
+            return {"message": "invalid values"}, HTTPStatus.BAD_REQUEST
 
         new_episode = EpisodeModel(**kwargs)
 
@@ -80,10 +84,10 @@ class Episode(Resource):
 
         kwargs = parse.parse_args()
 
-        current_episode = EpisodeModel.query.get_or_404(episode_id)
-
         if is_bad_request(body, kwargs.keys()):
             return {"message": "invalid values"}, HTTPStatus.BAD_REQUEST
+
+        current_episode = EpisodeModel.query.get_or_404(episode_id)
 
         [
             setattr(current_episode, key, value)

@@ -10,7 +10,7 @@ class Doctor(Resource):
     @jwt_required()
     def get(self):
         doctor_id = get_jwt_identity()
-        doctor = DoctorModel.query.get(doctor_id)
+        doctor = DoctorModel.query.get_or_404(doctor_id)
         serializer = doctor_schema.dump(doctor)
 
         return {"message": "success", "data": serializer}, HTTPStatus.OK
