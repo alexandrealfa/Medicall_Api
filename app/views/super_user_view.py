@@ -1,14 +1,39 @@
 from http import HTTPStatus
 
+from flask_restful import reqparse, request
 from flask_jwt_extended import jwt_required
 
+from sqlalchemy.exc import IntegrityError
+
 from . import (BaseView, DoctorModel, EpisodeModel, PatientModel,
-               doctors_schema, episodes_schema, patients_schema)
+               doctors_schema, episodes_schema, patients_schema,
+               SuperuserModel, is_bad_request, db_manager)
 
 
 class SuperUser(BaseView):
     def post(self):
-        ...
+        parse = reqparse.RequestParser()
+
+        parse.add_argument("firstname", type=str, nullable=False),
+        parse.add_argument("lastname", type=str, nullable=False),
+        parse.add_argument("phone", type=str, nullable=False),
+        parse.add_argument("email", type=str, nullable=False, unique=True),
+        parse.add_argument("password", type=str, nullable=False)
+
+        kwargs = parse.parse_args()
+        body = request.get_json()
+
+        if is_bad_request(body, kwargs.keys()):
+            return {"message": "invalid values"}, HTTPStatus.BAD_REQUEST
+
+        new_super_user = SuperuserModel(**kwargs)
+
+        try:
+            db_manager(new_super_user)
+        except IntegrityError:
+            return {"message": "email already in use"}, HTTPStatus.NOT_ACCEPTABLE
+
+        return {"message": "success created", "data": ""}
 
 
 class AllDoctors(BaseView):
