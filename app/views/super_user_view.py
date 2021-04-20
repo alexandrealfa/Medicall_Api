@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required
 from sqlalchemy.exc import IntegrityError
 
 from . import (BaseView, DoctorModel, EpisodeModel, PatientModel,
-               doctors_schema, episodes_schema, patients_schema,
+               doctors_schema, episodes_schema, patients_schema,superuser_schema,
                SuperuserModel, is_bad_request, db_manager)
 
 
@@ -33,7 +33,8 @@ class SuperUser(BaseView):
         except IntegrityError:
             return {"message": "email already in use"}, HTTPStatus.NOT_ACCEPTABLE
 
-        return {"message": "success created", "data": ""}
+        serializer = superuser_schema.dump(new_super_user)
+        return {"message": "success created", "data": serializer}
 
 
 class AllDoctors(BaseView):
