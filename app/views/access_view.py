@@ -6,7 +6,7 @@ from flask_jwt_extended import create_access_token
 from flask_restful import Resource, reqparse
 
 from . import (DoctorModel, PatientModel, doctor_schema, is_bad_request,
-               patient_schema)
+               patient_schema, SuperuserModel)
 
 
 class SignIn(Resource):
@@ -26,6 +26,8 @@ class SignIn(Resource):
 
         if not found_user:
             found_user: PatientModel = PatientModel.query.filter_by(email=email).first()
+            if not found_user:
+                found_user: SuperuserModel = SuperuserModel.query.filter_by(email=email).first()
 
         if not found_user.check_password(password):
             return {"message": "unauthorized"}, HTTPStatus.UNAUTHORIZED    

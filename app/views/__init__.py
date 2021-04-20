@@ -4,12 +4,14 @@ from marshmallow_enum import EnumField
 from app.configurations.serializer import ma
 from app.models.doctor_model import DoctorModel
 from app.models.enum_model import EnumType
+from app.models.superuser_model import SuperuserModel
 from app.models.episode_model import EpisodeModel
 from app.models.patient_model import PatientModel
 from app.schema.doctor_schema import (doctor_schema, doctors_schema,
                                       episodes_schema)
 from app.schema.episodes_schema import episode_schema
 from app.schema.patient_schema import patient_schema, patients_schema
+from app.schema.superuser_schema import superuser_schema, superusers_schema
 from app.views.base_view import BaseView
 
 
