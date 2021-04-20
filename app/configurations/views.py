@@ -6,15 +6,12 @@ def init_app(app: Flask):
     api = Api(app)
 
     # Import views, and builds and resources
-    from app.views.patient_view import Patients
-    from app.views.doctor_view import Doctor
-    from app.views.episodes_view import (
-        Episode,
-        DoctorEpisodes,
-        PatientEpisodes,
-    )
-    from app.views.super_user_view import AllPatients, AllDoctors, AllEpisodes
     from app.views.access_view import SignIn
+    from app.views.doctor_view import Doctor
+    from app.views.episodes_view import (DoctorEpisodes, Episode,
+                                         PatientEpisodes)
+    from app.views.patient_view import Patients
+    from app.views.super_user_view import AllDoctors, AllEpisodes, AllPatients
 
     api.add_resource(SignIn, "/login", endpoint="/login",
                      methods=["POST"])

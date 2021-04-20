@@ -1,11 +1,15 @@
-from app.models.patient_model import PatientModel
-from app.schema.patient_schema import patients_schema, patient_schema
-from app.models.doctor_model import DoctorModel
-from app.schema.doctor_schema import doctor_schema, doctors_schema
-from app.models.episode_model import EpisodeModel
-from app.schema.episodes_schema import episode_schema, episodes_schema
-
 from flask import current_app
+from marshmallow_enum import EnumField
+
+from app.configurations.serializer import ma
+from app.models.doctor_model import DoctorModel
+from app.models.enum_model import EnumType
+from app.models.episode_model import EpisodeModel
+from app.models.patient_model import PatientModel
+from app.schema.doctor_schema import (doctor_schema, doctors_schema,
+                                      episodes_schema)
+from app.schema.episodes_schema import episode_schema
+from app.schema.patient_schema import patient_schema, patients_schema
 
 
 def db_manager(available_patient: object, deleted: bool = False):

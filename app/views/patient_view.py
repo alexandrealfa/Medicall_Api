@@ -1,15 +1,22 @@
-from . import patient_schema, patients_schema, PatientModel, db_manager, is_bad_request
-from flask_restful import Resource, reqparse
 from http import HTTPStatus
-from flask_jwt_extended import get_jwt_identity, jwt_required
+
 from flask import request
+from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_restful import Resource, reqparse
 from sqlalchemy.exc import IntegrityError
 
+from app.views.base_view import BaseView
 
-class Patients(Resource):
+from . import (PatientModel, db_manager, is_bad_request, patient_schema,
+               patients_schema)
+
+
+class Patients(BaseView):
     @jwt_required()
     def get(self):
-        patient_id = get_jwt_identity()
+        if self.get_type() == "doctor":
+            return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
+        patient_id = self.get_id()
         current_patient = PatientModel.query.get_or_404(patient_id)
         serializer = patient_schema.dump(current_patient)
 
@@ -27,7 +34,7 @@ class Patients(Resource):
         kwargs = parse.parse_args()
 
         if is_bad_request(body, kwargs.keys()):
-                    return {"message": "invalid values"}, HTTPStatus.BAD_REQUEST
+            return {"message": "invalid values"}, HTTPStatus.BAD_REQUEST
 
         new_patient = PatientModel(**kwargs)
 
@@ -42,6 +49,8 @@ class Patients(Resource):
 
     @jwt_required()
     def patch(self):
+        if self.get_type() == "doctor":
+            return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
         body = request.get_json()
 
         parse = reqparse.RequestParser()
@@ -51,7 +60,7 @@ class Patients(Resource):
         parse.add_argument("email", type=str)
         parse.add_argument("password", type=str)
 
-        patient_id = get_jwt_identity()
+        patient_id = self.get_id()
         current_patient = PatientModel.query.get_or_404(patient_id)
         kwargs = parse.parse_args()
 
@@ -73,7 +82,9 @@ class Patients(Resource):
 
     @jwt_required()
     def delete(self):
-        patient_id = get_jwt_identity()
+        if self.get_type() == "doctor":
+            return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
+        patient_id = self.get_id()
         current_patient = PatientModel.query.get_or_404(patient_id)
         db_manager(current_patient, True)
 

@@ -1,7 +1,8 @@
-from .base_model import db, BaseModel
 import datetime
 
 from app.models.enum_model import EnumEmergency
+
+from .base_model import BaseModel, db
 
 
 class EpisodeModel(BaseModel):

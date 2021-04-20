@@ -1,7 +1,10 @@
-from flask_restful import Resource, reqparse
-from . import DoctorModel, doctors_schema, PatientModel, patients_schema, EpisodeModel, episodes_schema
-from flask_jwt_extended import jwt_required
 from http import HTTPStatus
+
+from flask_jwt_extended import jwt_required
+from flask_restful import Resource, reqparse
+
+from . import (DoctorModel, EpisodeModel, PatientModel, doctors_schema,
+               episodes_schema, patients_schema)
 
 
 class AllDoctors(Resource):

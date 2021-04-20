@@ -1,5 +1,7 @@
-from .base_model import db, BaseModel
 from app.models.enum_model import EnumState
+
+from .base_model import BaseModel, db
+
 
 class AddressModel(BaseModel):
     zip_code = db.Column(db.String, nullable=False)

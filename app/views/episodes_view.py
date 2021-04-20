@@ -1,17 +1,12 @@
-from flask_restful import Resource, reqparse
 from http import HTTPStatus
+
 from flask import request
+from flask_restful import Resource, reqparse
 from sqlalchemy.exc import IntegrityError
 
-from . import (
-    EpisodeModel,
-    PatientModel,
-    DoctorModel,
-    episode_schema,
-    episodes_schema,
-    db_manager,
-    is_bad_request,
-)
+from . import (DoctorModel, EpisodeModel, PatientModel, db_manager,
+               episode_schema, episodes_schema, is_bad_request)
+
 
 class DoctorEpisodes(Resource):
     def get(self, doctor_id):

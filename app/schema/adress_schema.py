@@ -1,6 +1,9 @@
-from . import ma, EnumState
-from app.models.address_model import AddressModel
 from marshmallow_enum import EnumField
+
+from app.models.address_model import AddressModel
+
+from . import EnumState, ma
+
 
 class AddressSchema(ma.Schema):
     class Meta:
@@ -13,5 +16,6 @@ class AddressSchema(ma.Schema):
     state = EnumField(EnumState, by_value=True)
     country = ma.String()
     patient_id = ma.Integer()
+
 
 address_schema = AddressSchema()

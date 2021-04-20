@@ -1,7 +1,10 @@
-from .base_model import db, BaseModel
-from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+
+from werkzeug.security import check_password_hash, generate_password_hash
+
 from app.models.enum_model import EnumType
+
+from .base_model import BaseModel, db
 
 
 class PatientModel(BaseModel):
