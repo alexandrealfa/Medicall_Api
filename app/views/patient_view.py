@@ -47,7 +47,7 @@ class Patients(BaseView):
 
     @jwt_required()
     def patch(self):
-        if self.get_type() == "doctor":
+        if self.get_type() == "":
             return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
         body = request.get_json()
 

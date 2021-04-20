@@ -11,13 +11,15 @@ def init_app(app: Flask):
     from app.views.episodes_view import (DoctorEpisodes, Episode,
                                          PatientEpisodes)
     from app.views.patient_view import Patients
-    from app.views.super_user_view import AllDoctors, AllEpisodes, AllPatients, SuperUser
+    from app.views.super_user_view import AllDoctors, AllEpisodes, AllPatients, SuperUser, AllSuperUsers
 
     api.add_resource(SignIn, "/login", endpoint="/login",
                      methods=["POST"])
 
     api.add_resource(SuperUser, "/root", endpoint="/root",
-                     methods=["POST"])
+                     methods=["POST", "PATCH", "DELETE", "GET"])
+    api.add_resource(AllSuperUsers, "/all_superusers", endpoint="/all_superusers",
+                     methods=["GET"])
     api.add_resource(AllDoctors, "/all_doctors", endpoint="/all_doctors",
                      methods=["GET"])
     api.add_resource(AllEpisodes, "/all_episodes", endpoint="/all_episodes",

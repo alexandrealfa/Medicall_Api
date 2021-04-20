@@ -11,7 +11,6 @@ class SuperUserSerializer(ma.Schema):
     phone = ma.String()
     email = ma.String()
     created_at = ma.String()
-    user_type = ma.String()
 
 
 superuser_schema = SuperUserSerializer()
