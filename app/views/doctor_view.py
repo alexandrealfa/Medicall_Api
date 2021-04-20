@@ -1,15 +1,20 @@
-from flask_restful import Resource, reqparse
 from http import HTTPStatus
-from . import DoctorModel, doctor_schema, doctors_schema, db_manager, is_bad_request
-from flask_jwt_extended import jwt_required, get_jwt_identity
-from flask import request
+
+from flask_jwt_extended import jwt_required
+from flask_restful import reqparse, request
 from sqlalchemy.exc import IntegrityError
 
+from app.views.base_view import BaseView
 
-class Doctor(Resource):
+from . import DoctorModel, db_manager, doctor_schema, is_bad_request
+
+
+class Doctor(BaseView):
     @jwt_required()
     def get(self):
-        doctor_id = get_jwt_identity()
+        if self.get_type() == "patient":
+            return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
+        doctor_id = self.get_id()
         doctor = DoctorModel.query.get_or_404(doctor_id)
         serializer = doctor_schema.dump(doctor)
 
@@ -17,7 +22,6 @@ class Doctor(Resource):
 
     def post(self):
         body = request.get_json()
-
         parse = reqparse.RequestParser()
 
         parse.add_argument("specialty", type=str, required=True)
@@ -29,9 +33,8 @@ class Doctor(Resource):
         parse.add_argument("password", type=str, required=True)
 
         kwargs = parse.parse_args()
-
         if is_bad_request(body, kwargs.keys()):
-                    return {"message": "invalid values"}, HTTPStatus.BAD_REQUEST
+            return{"message": "invalid values"}, HTTPStatus.BAD_REQUEST
 
         new_doctor = DoctorModel(
             specialty=kwargs.specialty,
@@ -41,7 +44,6 @@ class Doctor(Resource):
             phone=kwargs.phone,
             email=kwargs.email,
         )
-
         new_doctor.password = kwargs.password
 
         try:
@@ -55,9 +57,12 @@ class Doctor(Resource):
 
     @jwt_required()
     def patch(self):
-        body = request.get_json()
+        if self.get_type() == "patient":
+            return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
 
+        body = request.get_json()
         parse = reqparse.RequestParser()
+
         parse.add_argument("specialty", type=str)
         parse.add_argument("crm", type=str)
         parse.add_argument("firstname", type=str)
@@ -67,8 +72,7 @@ class Doctor(Resource):
         parse.add_argument("password", type=str)
 
         kwargs = parse.parse_args()
-
-        doctor_id = get_jwt_identity()
+        doctor_id = self.get_id()
         doctor = DoctorModel.query.get_or_404(doctor_id)
 
         if is_bad_request(body, kwargs.keys()):
@@ -88,7 +92,10 @@ class Doctor(Resource):
 
     @jwt_required()
     def delete(self):
-        doctor_id = get_jwt_identity()
+        if self.get_type() == "patient":
+            return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
+
+        doctor_id = self.get_id()
         doctor = DoctorModel.query.get_or_404(doctor_id)
         db_manager(doctor, True)
 

@@ -1,12 +1,9 @@
-from flask import Flask
 from environs import Env
-from config import config_selector
+from flask import Flask
 
-from app.configurations import database
-from app.configurations import serializer
-from app.configurations import migration
-from app.configurations import views
-from app.configurations import authentication
+from app.configurations import (authentication, database, migration,
+                                serializer, views)
+from config import config_selector
 
 env = Env()
 env.read_env()

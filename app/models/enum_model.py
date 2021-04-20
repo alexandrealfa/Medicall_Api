@@ -14,6 +14,7 @@ class EnumType(enum.Enum):
     PATIENT = "patient"
     SUPER_USER = "superuser"
 
+
 class EnumState(enum.Enum):
     AC = "AC"
     AL = "AL"

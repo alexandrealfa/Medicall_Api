@@ -1,6 +1,8 @@
-from . import ma, EnumEmergency
-from app.models.episode_model import EpisodeModel
 from marshmallow_enum import EnumField
+
+from app.models.episode_model import EpisodeModel
+
+from . import EnumEmergency, ma
 
 
 class EpisodeSchema(ma.Schema):

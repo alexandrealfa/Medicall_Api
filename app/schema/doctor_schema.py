@@ -1,6 +1,7 @@
-from . import ma
 from app.models.doctor_model import DoctorModel
 from app.schema.episodes_schema import episodes_schema
+
+from . import ma
 
 
 class DoctorSchema(ma.Schema):
