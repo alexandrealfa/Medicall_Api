@@ -4,9 +4,7 @@ from flask_jwt_extended import jwt_required
 from flask_restful import reqparse, request
 from sqlalchemy.exc import IntegrityError
 
-from app.views.base_view import BaseView
-
-from . import DoctorModel, db_manager, doctor_schema, is_bad_request
+from . import BaseView, DoctorModel, db_manager, doctor_schema, is_bad_request
 
 
 class Doctor(BaseView):
@@ -34,7 +32,7 @@ class Doctor(BaseView):
 
         kwargs = parse.parse_args()
         if is_bad_request(body, kwargs.keys()):
-            return{"message": "invalid values"}, HTTPStatus.BAD_REQUEST
+            return {"message": "invalid values"}, HTTPStatus.BAD_REQUEST
 
         new_doctor = DoctorModel(
             specialty=kwargs.specialty,
@@ -100,5 +98,5 @@ class Doctor(BaseView):
         db_manager(doctor, True)
 
         return {
-            "data": f"doctor {doctor_id} has successfully been deleted"
-        }, HTTPStatus.OK
+                   "data": f"doctor {doctor_id} has successfully been deleted"
+               }, HTTPStatus.OK

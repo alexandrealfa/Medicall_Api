@@ -10,6 +10,7 @@ from app.schema.doctor_schema import (doctor_schema, doctors_schema,
                                       episodes_schema)
 from app.schema.episodes_schema import episode_schema
 from app.schema.patient_schema import patient_schema, patients_schema
+from app.views.base_view import BaseView
 
 
 def db_manager(available_patient: object, deleted: bool = False):
