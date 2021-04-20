@@ -1,7 +1,6 @@
 from http import HTTPStatus
 
-from flask import request
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, request
 from sqlalchemy.exc import IntegrityError
 
 from . import (DoctorModel, EpisodeModel, PatientModel, db_manager,

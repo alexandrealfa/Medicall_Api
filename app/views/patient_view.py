@@ -1,14 +1,12 @@
 from http import HTTPStatus
 
 from flask import request
-from flask_jwt_extended import get_jwt_identity, jwt_required
-from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required
+from flask_restful import reqparse
 from sqlalchemy.exc import IntegrityError
 
-from app.views.base_view import BaseView
-
-from . import (PatientModel, db_manager, is_bad_request, patient_schema,
-               patients_schema)
+from . import (BaseView, PatientModel, db_manager, is_bad_request,
+               patient_schema)
 
 
 class Patients(BaseView):
