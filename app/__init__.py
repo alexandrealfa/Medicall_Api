@@ -2,7 +2,8 @@ from environs import Env
 from flask import Flask
 
 from app.configurations import (authentication, database, migration,
-                                serializer, views)
+                                serializer, views_config)
+from app.views.bp_download_pdf import bild_app
 from config import config_selector
 
 env = Env()
@@ -18,6 +19,7 @@ def create_app():
     authentication.init_app(app)
     migration.init_app(app)
     serializer.init_app(app)
-    views.init_app(app)
+    views_config.init_app(app)
+    bild_app(app)
 
     return app

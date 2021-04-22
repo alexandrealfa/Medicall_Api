@@ -185,7 +185,7 @@ class AllEpisodes(BaseView):
         all_episodes: EpisodeModel = EpisodeModel.query\
             .order_by(EpisodeModel.id)\
             .paginate(page=self.page_pagination(),
-                      per_page=self.per_page_pagination,
+                      per_page=self.per_page_pagination(),
                       error_out=False).items
 
         serializer = episodes_schema.dump(all_episodes)

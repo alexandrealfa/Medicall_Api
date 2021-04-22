@@ -43,6 +43,3 @@ def init_app(app: Flask):
     api.add_resource(PatientEpisodes, "/episodes/patient/<int:patient_id>",
                      endpoint="/episodes/patient/<int:patient_id>",
                      methods=["GET"])
-    api.add_resource(Episode, "/episode/print/<int:episode_id>",
-                     endpoint="/episode/print/<int:episode_id>",
-                     methods=["GET"])

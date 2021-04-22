@@ -16,11 +16,11 @@ class BaseView(Resource):
         return user_type
 
     def page_pagination(self):
-        page = int(request.args.get("page")) if request.args.get("page") else 1
+        page = 1 if not request.args.get("page") else int(request.args.get("page"))
         return page
 
     def per_page_pagination(self):
-        per_page = int(request.args.get("per_page")) if request.args.get("per_page") else 15
+        per_page = 15 if not request.args.get("per_page") else int(request.args.get("per_page"))
         return per_page
 
     def pdf_template(self, name, email, phone, doctor_name, doctor_email, description, emergency_status, created_at):
@@ -33,6 +33,6 @@ class BaseView(Resource):
 
         response = make_response(pdf)
         response.headers['Content-Type'] = 'application/pdf'
-        response.headers['Content-Disposition'] = 'attachment; filename=output'
+        response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
 
         return response
