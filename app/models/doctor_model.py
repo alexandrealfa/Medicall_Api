@@ -23,6 +23,8 @@ class DoctorModel(BaseModel):
         server_default=EnumType.DOCTOR.value,
     )
     episodes_list = db.relationship("EpisodeModel", backref=db.backref("episodes_list", lazy="joined"), lazy="joined")
+    disabled = db.Column(db.Boolean, default=False, nullable=True)
+
 
     @property
     def password(self):

@@ -20,6 +20,7 @@ class SuperuserModel(BaseModel):
         default=EnumType.SUPER_USER.value,
         server_default=EnumType.SUPER_USER.value,
     )
+    disabled = db.Column(db.Boolean, default=False, nullable=True)
 
     @property
     def password(self):

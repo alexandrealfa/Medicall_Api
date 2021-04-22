@@ -21,6 +21,7 @@ class PatientModel(BaseModel):
         server_default=EnumType.PATIENT.value,
     )
     episodes_list = db.relationship("EpisodeModel", backref=db.backref("patient_list", lazy="joined"), lazy="joined")
+    disabled = db.Column(db.Boolean, default=False, nullable=True)
 
     @property
     def password(self):
