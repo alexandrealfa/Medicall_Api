@@ -1,5 +1,7 @@
 from flask_jwt_extended import get_jwt_identity
 from flask_restful import Resource, request
+from flask import render_template, make_response
+import pdfkit
 
 
 class BaseView(Resource):
@@ -20,3 +22,13 @@ class BaseView(Resource):
     def per_page_pagination(self):
         per_page = int(request.args.get("per_page")) if request.args.get("per_page") else 15
         return per_page
+
+    def pdf_template(self, name, email, phone):
+        render = render_template("pdf_template.html", name=name, email=email, phone=phone)
+        pdf = pdfkit.from_string(render, False)
+
+        response = make_response(pdf)
+        response.headers['Content-Type'] = 'application/pdf'
+        response.headers['Content-Disposition'] = 'inline; filename=template.pdf'
+
+        return response
