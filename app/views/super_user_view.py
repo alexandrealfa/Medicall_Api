@@ -100,7 +100,7 @@ class SuperUser(BaseView):
 
         db_manager(current_superuser)
 
-        return {"message": f"patient {superuser_id} has been deleted"}, HTTPStatus.OK
+        return {"message": f"super user {superuser_id} was disabled"}, HTTPStatus.OK
 
 
 class AllSuperUsers(BaseView):
