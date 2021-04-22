@@ -1,5 +1,6 @@
 from environs import Env
 from flask import Flask
+import os
 
 from app.configurations import (authentication, database, migration,
                                 serializer, views_config)
@@ -9,11 +10,13 @@ from config import config_selector
 env = Env()
 env.read_env()
 
+basedir = os.path.abspath(os.path.dirname(__file__))
 
-def create_app():
+
+def create_app(env=None):
     app = Flask(__name__)
-    config_type = env("FLASK_ENV")
-    app.config.from_object(config_selector[config_type])
+    # config_type = env("FLASK_ENV")
+    app.config.from_object(config_selector[env or "test"])
 
     database.init_app(app)
     authentication.init_app(app)
