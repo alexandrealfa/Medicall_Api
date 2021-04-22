@@ -1,21 +1,91 @@
 <html lang="pt-br">
   <head>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        position: relative;
+        font-family: "poppins";
+      }
+      .block {
+        margin: 3rem 0 3rem 0;
+      }
+      .titulo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        text-align: center;
+        color: #01c4a6;
+        font-size: 2rem;
+        margin-bottom: 5rem;
+      }
+      h1 {
+        margin-right: 2rem;
+      }
+      hr {
+        color: #01c4a6;
+        background-color: #01c4a6;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+      .logo_div {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+      }
+      .square {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        margin: 0.1rem;
+        background-color: #01c4a6;
+      }
+    </style>
   </head>
   <body>
-    <h3>DADOS DA CONSULTA:</h3>
-    <h5>User Info:</h5>
-    <b>Nome: </b>{{name}}<br />
-    <b>Email: </b>{{email}}<br />
-    <b>Telefone: </b>{{phone}}<br />
+    <div class="titulo block">
+      <h1>Medicall</h1>
+
+      <div class="logo">
+        <div>
+          <div class="square"></div>
+        </div>
+        <div class="logo_div">
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+        </div>
+        <div>
+          <div class="square"></div>
+        </div>
+      </div>
+    </div>
+    <div class="consulta block">
+      <h2>DADOS DA CONSULTA:</h2>
+      <h3>Informa&ccedil&otildees do paciente:</h3>
+      <p><b>Nome: </b>{{name}}</p>
+      <p><b>Email: </b>{{email}}</p>
+      <p><b>Telefone: </b>{{phone}}</p>
+    </div>
     <hr />
-    <h3>Doctor info:</h3>
-    <b>Dr Respons&aacutevel: </b>{{doctor_name}}<br />
-    <b>Email Dr:</b>{{doctor_email}}
+    <div class="doctor block">
+      <h3>Informa&ccedil&otildees do m&eacutedico:</h3>
+      <p><b>Respons&aacutevel: </b>{{doctor_name}}</p>
+      <p><b>Email</b>{{doctor_email}}</p>
+    </div>
     <hr />
-    <h3>Informa&ccedil&otildees da Consulta</h3>
-    <b>Descri&ccedil&atildeo: </b>{{description}}<br />
-    <b>Situa&ccedil&atildeo: </b>{{emergency_status}}<br />
-    <b>Data de agendamento: </b>{{created_at}}<br />
+    <div class="info block">
+      <h3>Informa&ccedil&otildees da consulta</h3>
+      <p><b>Descri&ccedil&atildeo: </b>{{description}}</p>
+      <p><b>Situa&ccedil&atildeo: </b>{{emergency_status}}<br /></p>
+      <p><b>Data de agendamento: </b>{{created_at}}<br /></p>
+    </div>
   </body>
 </html>
