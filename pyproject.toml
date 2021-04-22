@@ -21,6 +21,7 @@ ipdb = "^0.13.7"
 DateTime = "^4.3"
 marshmallow-enum = "^1.5.1"
 marshmallow-dataclass = "^8.4.1"
+pdfkit = "^0.6.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
