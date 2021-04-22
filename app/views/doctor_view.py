@@ -111,5 +111,5 @@ class Doctor(BaseView):
         db_manager(doctor)
 
         return {
-                   "data": f"doctor {doctor_id} has successfully been deleted"
+                   "data": f"doctor {doctor_id} was disabled"
                }, HTTPStatus.OK
