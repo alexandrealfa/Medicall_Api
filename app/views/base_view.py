@@ -23,12 +23,16 @@ class BaseView(Resource):
         per_page = int(request.args.get("per_page")) if request.args.get("per_page") else 15
         return per_page
 
-    def pdf_template(self, name, email, phone):
-        render = render_template("pdf_template.html", name=name, email=email, phone=phone)
-        pdf = pdfkit.from_string(render, False)
+    def pdf_template(self, name, email, phone, doctor_name, doctor_email, description, emergency_status, created_at):
+        html = render_template("pdf_template.html",
+                               name=name, email=email, phone=phone,
+                               doctor_name=doctor_name, doctor_email=doctor_email,
+                               description=description, emergency_status=emergency_status,
+                               created_at=created_at)
+        pdf = pdfkit.from_string(html, False)
 
         response = make_response(pdf)
         response.headers['Content-Type'] = 'application/pdf'
-        response.headers['Content-Disposition'] = 'inline; filename=template.pdf'
+        response.headers['Content-Disposition'] = 'attachment; filename=output'
 
         return response

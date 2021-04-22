@@ -6,6 +6,7 @@ def init_app(app: Flask):
     api = Api(app)
 
     # Import views, and builds and resources
+    from app.views.print_episode_view import PrintEpisode
     from app.views.access_view import SignIn
     from app.views.doctor_view import Doctor
     from app.views.episodes_view import (DoctorEpisodes, Episode,
@@ -39,5 +40,9 @@ def init_app(app: Flask):
                      methods=["GET", "DELETE", "PATCH"],)
     api.add_resource(DoctorEpisodes, "/episodes/doctor/<int:doctor_id>", endpoint="/episodes/doctor/<int:doctor_id>",
                      methods=["GET"])
-    api.add_resource(PatientEpisodes, "/episodes/patient/<int:patient_id>", endpoint="/episodes/patient/<int:patient_id>",
+    api.add_resource(PatientEpisodes, "/episodes/patient/<int:patient_id>",
+                     endpoint="/episodes/patient/<int:patient_id>",
+                     methods=["GET"])
+    api.add_resource(Episode, "/episode/print/<int:episode_id>",
+                     endpoint="/episode/print/<int:episode_id>",
                      methods=["GET"])
