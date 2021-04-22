@@ -13,7 +13,11 @@ class Doctor(BaseView):
         if self.get_type() == "patient":
             return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
         doctor_id = self.get_id()
-        doctor = DoctorModel.query.get_or_404(doctor_id)
+        doctor: DoctorModel = DoctorModel.query.get_or_404(doctor_id)
+
+        if doctor.disabled:
+            return {"message": "your account is disabled"}, HTTPStatus.UNAUTHORIZED
+
         serializer = doctor_schema.dump(doctor)
 
         return {"message": "success", "data": serializer}, HTTPStatus.OK
@@ -73,6 +77,9 @@ class Doctor(BaseView):
         doctor_id = self.get_id()
         doctor = DoctorModel.query.get_or_404(doctor_id)
 
+        if doctor.disabled:
+            return {"message": "your account is disabled"}, HTTPStatus.UNAUTHORIZED
+
         if is_bad_request(body, kwargs.keys()):
             return {"message": "invalid values"}, HTTPStatus.BAD_REQUEST
 
@@ -94,8 +101,14 @@ class Doctor(BaseView):
             return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
 
         doctor_id = self.get_id()
-        doctor = DoctorModel.query.get_or_404(doctor_id)
-        db_manager(doctor, True)
+        doctor: DoctorModel = DoctorModel.query.get_or_404(doctor_id)
+
+        if doctor.disabled:
+            return {"message": "your account is disabled"}, HTTPStatus.UNAUTHORIZED
+
+        doctor.disabled = True        
+
+        db_manager(doctor)
 
         return {
                    "data": f"doctor {doctor_id} has successfully been deleted"

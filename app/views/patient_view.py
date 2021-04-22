@@ -15,7 +15,11 @@ class Patients(BaseView):
         if self.get_type() == "doctor":
             return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
         patient_id = self.get_id()
-        current_patient = PatientModel.query.get_or_404(patient_id)
+        current_patient: PatientModel = PatientModel.query.get_or_404(patient_id)
+
+        if current_patient.disabled:
+            return {"message": "your account is disabled"}, HTTPStatus.UNAUTHORIZED
+
         serializer = patient_schema.dump(current_patient)
 
         return {"message": "success", "data": serializer}, HTTPStatus.OK
@@ -60,6 +64,10 @@ class Patients(BaseView):
 
         patient_id = self.get_id()
         current_patient = PatientModel.query.get_or_404(patient_id)
+
+        if current_patient.disabled:
+            return {"message": "your account is disabled"}, HTTPStatus.UNAUTHORIZED
+
         kwargs = parse.parse_args()
 
         if is_bad_request(body, kwargs.keys()):
@@ -84,6 +92,10 @@ class Patients(BaseView):
             return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
         patient_id = self.get_id()
         current_patient: PatientModel = PatientModel.query.get_or_404(patient_id)
+
+        if current_patient.disabled:
+            return {"message": "your account is disabled"}, HTTPStatus.UNAUTHORIZED
+            
         current_patient.disabled = True
         db_manager(current_patient)
 

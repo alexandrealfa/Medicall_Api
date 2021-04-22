@@ -16,7 +16,11 @@ class SuperUser(BaseView):
         if self.get_type() != "superuser":
             return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
         superuser_id = self.get_id()
-        current_superuser = SuperuserModel.query.get_or_404(superuser_id)
+        current_superuser: SuperuserModel = SuperuserModel.query.get_or_404(superuser_id)
+
+        if current_superuser.disabled:
+            return {"message": "your account is disabled"}, HTTPStatus.UNAUTHORIZED
+
         serializer = superuser_schema.dump(current_superuser)
 
         return {"message": "success", "data": serializer}, HTTPStatus.OK
@@ -63,6 +67,9 @@ class SuperUser(BaseView):
         kwargs = parse.parse_args()
         current_superuser = SuperuserModel.query.get_or_404(superuser_id)
 
+        if current_superuser.disabled:
+            return {"message": "your account is disabled"}, HTTPStatus.UNAUTHORIZED
+
         if is_bad_request(body, kwargs.keys()):
             return {"message": "invalid values"}, HTTPStatus.BAD_REQUEST
 
@@ -84,8 +91,14 @@ class SuperUser(BaseView):
         if self.get_type() != "superuser":
             return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
         superuser_id = self.get_id()
-        current_superuser = SuperuserModel.query.get_or_404(superuser_id)
-        db_manager(current_superuser, True)
+        current_superuser: SuperuserModel = SuperuserModel.query.get_or_404(superuser_id)
+
+        if current_superuser.disabled:
+            return {"message": "your account is disabled"}, HTTPStatus.UNAUTHORIZED
+
+        current_superuser.disabled = True
+
+        db_manager(current_superuser)
 
         return {"message": f"patient {superuser_id} has been deleted"}, HTTPStatus.OK
 
@@ -95,6 +108,12 @@ class AllSuperUsers(BaseView):
     def get(self):
         if self.get_type() != "superuser":
             return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
+
+        superuser_id = self.get_id()
+        current_superuser: SuperuserModel = SuperuserModel.query.get_or_404(superuser_id)
+
+        if current_superuser.disabled:
+            return {"message": "your account is disabled"}, HTTPStatus.UNAUTHORIZED
 
         all_superusers: SuperuserModel = SuperuserModel.query\
             .order_by(SuperuserModel.id)\
@@ -113,6 +132,12 @@ class AllDoctors(BaseView):
         if self.get_type() != "superuser":
             return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
 
+        superuser_id = self.get_id()
+        current_superuser: SuperuserModel = SuperuserModel.query.get_or_404(superuser_id)
+
+        if current_superuser.disabled:
+            return {"message": "your account is disabled"}, HTTPStatus.UNAUTHORIZED
+
         all_doctors: DoctorModel = DoctorModel.query\
             .order_by(DoctorModel.id)\
             .paginate(page=self.page_pagination(),
@@ -129,6 +154,13 @@ class AllPatients(BaseView):
     def get(self):
         if self.get_type() != "superuser":
             return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
+
+        superuser_id = self.get_id()
+        current_superuser: SuperuserModel = SuperuserModel.query.get_or_404(superuser_id)
+
+        if current_superuser.disabled:
+            return {"message": "your account is disabled"}, HTTPStatus.UNAUTHORIZED
+
         all_patients = PatientModel.query.\
             paginate(page=self.page_pagination(),
                      per_page=self.per_page_pagination(),
@@ -143,6 +175,13 @@ class AllEpisodes(BaseView):
     def get(self):
         if self.get_type() != "superuser":
             return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
+
+        superuser_id = self.get_id()
+        current_superuser: SuperuserModel = SuperuserModel.query.get_or_404(superuser_id)
+
+        if current_superuser.disabled:
+            return {"message": "your account is disabled"}, HTTPStatus.UNAUTHORIZED
+            
         all_episodes: EpisodeModel = EpisodeModel.query\
             .order_by(EpisodeModel.id)\
             .paginate(page=self.page_pagination(),
