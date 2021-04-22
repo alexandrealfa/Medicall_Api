@@ -30,7 +30,10 @@ class SignIn(Resource):
                 found_user: SuperuserModel = SuperuserModel.query.filter_by(email=email).first()
 
         if not found_user.check_password(password):
-            return {"message": "unauthorized"}, HTTPStatus.UNAUTHORIZED    
+            return {"message": "unauthorized"}, HTTPStatus.UNAUTHORIZED
+
+        if found_user.disabled:
+            return {"message": "your account is disabled"}, HTTPStatus.UNAUTHORIZED        
 
         access_token = create_access_token(identity=str(found_user.id)+" "+found_user.user_type.value,
                                            expires_delta=timedelta(days=7))

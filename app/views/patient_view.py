@@ -83,7 +83,8 @@ class Patients(BaseView):
         if self.get_type() == "doctor":
             return {"message": "Not Access"}, HTTPStatus.NOT_ACCEPTABLE
         patient_id = self.get_id()
-        current_patient = PatientModel.query.get_or_404(patient_id)
-        db_manager(current_patient, True)
+        current_patient: PatientModel = PatientModel.query.get_or_404(patient_id)
+        current_patient.disabled = True
+        db_manager(current_patient)
 
-        return {"message": f"patient {patient_id} has been deleted"}, HTTPStatus.OK
+        return {"message": f"patient {patient_id} patient was disabled"}, HTTPStatus.OK
