@@ -775,6 +775,14 @@ dev = ["pytest", "pytest-timeout", "coverage", "tox", "sphinx", "pallets-sphinx-
 watchdog = ["watchdog"]
 
 [[package]]
+name = "wkhtmltopdf"
+version = "0.2"
+description = "Simple python wrapper for wkhtmltopdf"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "zope.interface"
 version = "5.3.0"
 description = "Interfaces for Python"
@@ -790,7 +798,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "0f6cc99882e14bc06886ac8f4d7fe44b5aee107e1a58f2252844805bbdd66f13"
+content-hash = "fa07c187c95b10226f9851dd90402c987240da422dfa61dc1ce0e3c3f7d2b676"
 
 [metadata.files]
 alembic = [
@@ -1280,6 +1288,12 @@ wcwidth = [
 werkzeug = [
     {file = "Werkzeug-1.0.1-py2.py3-none-any.whl", hash = "sha256:2de2a5db0baeae7b2d2664949077c2ac63fbd16d98da0ff71837f7d1dea3fd43"},
     {file = "Werkzeug-1.0.1.tar.gz", hash = "sha256:6c80b1e5ad3665290ea39320b91e1be1e0d5f60652b964a3070216de83d2e47c"},
+]
+wkhtmltopdf = [
+    {file = "wkhtmltopdf-0.2-py2.5.egg", hash = "sha256:eea6f42dccf58ded01980ae77e52017230db06b508e69fdb4f57c91054f543e0"},
+    {file = "wkhtmltopdf-0.2-py2.6.egg", hash = "sha256:f14972abdecf5ddb6e397e7b4910dad31516c0e146145753ce18144ba73be1a1"},
+    {file = "wkhtmltopdf-0.2-py2.7.egg", hash = "sha256:60c84c327f949a256c6c0752a0a5d8a63daa08d6158f650d6379be9aaa536a94"},
+    {file = "wkhtmltopdf-0.2.tar.gz", hash = "sha256:530fffb5d1faf4f4cd5248c14fd1b4b7fe311541d0660dc2c2272c32b3c72211"},
 ]
 "zope.interface" = [
     {file = "zope.interface-5.3.0-cp27-cp27m-macosx_10_14_x86_64.whl", hash = "sha256:2ec58e1e1691dde4fbbd97f8610de0f8f1b1a38593653f7d3b8e931b9cd6d67f"},
