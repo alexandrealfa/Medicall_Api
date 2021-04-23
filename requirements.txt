@@ -375,3 +375,12 @@ zope.interface==5.3.0; python_version >= "2.7" and python_full_version < "3.0.0"
     --hash=sha256:7234ac6782ca43617de803735949f79b894f0c5d353fbc001d745503c69e6d1d \
     --hash=sha256:a38c10423a475a1658e2cb8f52cf84ec20a4c0adff724dd43a6b45183f499bc1 \
     --hash=sha256:b18a855f8504743e0a2d8b75d008c7720d44e4c76687e13f959e35d9a13eb397
+
+Flask~=1.1.2
+pdfkit~=0.6.1
+DateTime~=4.3
+SQLAlchemy~=1.4.7
+Werkzeug~=1.0.1
+environs~=9.3.2
+pytest~=5.4.3
+alembic~=1.5.8
