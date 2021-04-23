@@ -10,13 +10,16 @@ class Config:
 
 class DevelopmentConfig(Config):
     CONFIG_NAME = 'development'
-    SQLALCHEMY_DATABASE_URI = env("DB_URI_DEV")
+    SQLALCHEMY_DATABASE_URI = env("DATABASE_URL")
     TESTING = False
     JWT_SECRET_KEY = env("SECRET_KEY")
 
 
 class ProductionConfig(Config):
-    ...
+    CONFIG_NAME = 'production'
+    SQLALCHEMY_DATABASE_URI = env("DATABASE_URL")
+    TESTING = False
+    JWT_SECRET_KEY = env("SECRET_KEY")
 
 
 class TestConfig(Config):
