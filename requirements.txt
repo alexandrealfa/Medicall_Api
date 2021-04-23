@@ -22,9 +22,7 @@ datetime==4.3 \
 decorator==5.0.6; python_version >= "3.7" \
     --hash=sha256:d9f2d2863183a3c0df05f4b786f2e6b8752c093b3547a558f287bf3022fd2bf4 \
     --hash=sha256:f2e71efb39412bfd23d878e896a51b07744f2e2250b2e87d158e76828c5ae202
-environs==9.3.2; python_version >= "3.6" \
-    --hash=sha256:6bef733b88cc901e787cf24fb2eaa72621b0656226ea4e332ab24ed0cba36fcf \
-    --hash=sha256:2eb671afd37e6e9820131b918bbbcaa6658d0fb420ebf35bdfb750ae39c51a66
+
 faker==8.0.0; python_version >= "3.6" \
     --hash=sha256:225314932de94c282b096f6c3aac32db50119922747ac09a8350310da44241e5 \
     --hash=sha256:fe4bc214ba448ca52b20a0ee0ed16ded3e1ddce7874f2a95cd321d21e2e388d9
@@ -376,10 +374,9 @@ zope.interface==5.3.0; python_version >= "2.7" and python_full_version < "3.0.0"
     --hash=sha256:a38c10423a475a1658e2cb8f52cf84ec20a4c0adff724dd43a6b45183f499bc1 \
     --hash=sha256:b18a855f8504743e0a2d8b75d008c7720d44e4c76687e13f959e35d9a13eb397
 
-pdfkit~=0.6.1
+
 DateTime~=4.3
 SQLAlchemy~=1.4.7
 Werkzeug~=1.0.1
 environs~=9.3.2
 pytest~=5.4.3
-alembic~=1.5.8
