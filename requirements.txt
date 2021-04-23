@@ -374,4 +374,4 @@ zope.interface==5.3.0; python_version >= "2.7" and python_full_version < "3.0.0"
     --hash=sha256:a38c10423a475a1658e2cb8f52cf84ec20a4c0adff724dd43a6b45183f499bc1 \
     --hash=sha256:b18a855f8504743e0a2d8b75d008c7720d44e4c76687e13f959e35d9a13eb397
 
-environs~=9.3.2
+environs==9.3.2
