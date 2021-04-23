@@ -17,10 +17,17 @@ marshmallow = "^3.11.1"
 flask-marshmallow = "^0.14.0"
 marshmallow-sqlalchemy = "^0.24.2"
 Faker = "^8.0.0"
+ipdb = "^0.13.7"
+DateTime = "^4.3"
+marshmallow-enum = "^1.5.1"
+marshmallow-dataclass = "^8.4.1"
+pdfkit = "^0.6.1"
+wkhtmltopdf = "^0.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 black = {version = "^20.8b1", allow-prereleases = true}
+ipython = "^7.22.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
