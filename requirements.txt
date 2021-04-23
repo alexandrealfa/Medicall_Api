@@ -19,7 +19,6 @@ greenlet @ file:///home/alexandre/.cache/pypoetry/artifacts/42/96/aa/719bcbdacc8
 gunicorn @ file:///home/alexandre/.cache/pypoetry/artifacts/49/52/11/ca2c9e6fcb8f0cea17b42cca466392662d027b74267e171db859525e93/gunicorn-20.1.0.tar.gz
 ipdb @ file:///home/alexandre/.cache/pypoetry/artifacts/3b/42/c4/22062c17dd09ecc6c73a79fb0fbe565f84d5b99a397e46dc1892d59b5c/ipdb-0.13.7.tar.gz
 itsdangerous @ file:///home/alexandre/.cache/pypoetry/artifacts/82/e8/60/17593e06004d937316208bbf3859251fdedf80e106b9847181760ee2dd/itsdangerous-1.1.0-py2.py3-none-any.whl
-jedi @ file:///home/alexandre/.cache/pypoetry/artifacts/2a/5b/d6/62e1f4e7b392c3e7f8258bbe3159dff695814a46e65547cd547ca0fedb/jedi-0.18.0-py2.py3-none-any.whl
 Jinja2 @ file:///home/alexandre/.cache/pypoetry/artifacts/c5/c3/19/5cf0bc7ff64d230dd7d23c044479d2b44dabe877ca4165c2d85cbe996d/Jinja2-2.11.3-py2.py3-none-any.whl
 Mako @ file:///home/alexandre/.cache/pypoetry/artifacts/36/a0/32/d369940154b6574b58642bb8d75a2f2d2ad9a5f829c31e25e777978b50/Mako-1.1.4-py2.py3-none-any.whl
 MarkupSafe @ file:///home/alexandre/.cache/pypoetry/artifacts/a4/78/86/1bb0a788648c202bcaa2e95a65f75ad0939c3d4fe432ce5b720eb424d3/MarkupSafe-1.1.1-cp39-cp39-manylinux2010_x86_64.whl
