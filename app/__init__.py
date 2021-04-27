@@ -16,7 +16,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 def create_app(env=None):
     app = Flask(__name__)
     # config_type = env("FLASK_ENV")
-    app.config.from_object(config_selector["development"])
+    app.config.from_object(config_selector[env or "test"])
 
     database.init_app(app)
     authentication.init_app(app)
